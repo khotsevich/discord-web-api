@@ -3,7 +3,11 @@
   "version": "0.0.2",
   "description": "A Node.js wrapper for Discord's Web API",
   "author": "Maxim Khotsevich <xozewitc@yandex.ru>",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/**/*"
+  ],
   "keywords": [
     "discord",
     "api",
@@ -12,9 +16,16 @@
   ],
   "license": "MIT",
   "scripts": {
+    "prepare" : "npm run build",
+    "prepublishOnly" : "npm test && npm run eslint",
+    "preversion" : "npm run eslint",
+    "version" : "npm run format && git add -A src",
+    "postversion" : "git push && git push --tags",
     "test": "jest",
-    "lint": "eslint --fix src/",
-    "prettier": "prettier --write src/**/*.js"
+    "build": "tsc",
+    "eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx src",
+    "eslint:dump": "eslint --print-config ./.eslintrc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\""
   },
   "husky": {
     "hooks": {
@@ -37,23 +48,21 @@
     "url": "https://github.com/khotsevich/discord-web-api/issues"
   },
   "devDependencies": {
-    "@types/node": "^14.14.14",
+    "@types/jest": "^26.0.19",
+    "@typescript-eslint/eslint-plugin": "^4.11.0",
+    "@typescript-eslint/parser": "^4.11.0",
     "eslint": "^7.2.0",
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-node": "^4.1.0",
     "eslint-config-prettier": "^7.1.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-optimize-regex": "^1.2.0",
     "eslint-plugin-prettier": "^3.3.0",
-    "eslint-plugin-react": "^7.21.5",
-    "eslint-plugin-react-hooks": "^4.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-sonarjs": "^0.5.0",
     "husky": "^4.3.6",
     "jest": "^26.6.3",
     "lint-staged": "^10.5.3",
     "nodemon": "^2.0.6",
     "prettier": "^2.2.1",
-    "ts-node": "^9.1.1",
+    "ts-jest": "^26.4.4",
     "typescript": "^4.1.3"
   },
   "dependencies": {
